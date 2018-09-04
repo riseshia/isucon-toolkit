@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -ex
+
+ssh $(cat config/mysql_server) sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log
