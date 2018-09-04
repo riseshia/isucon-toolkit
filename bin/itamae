@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -ex
+
+_SERVER=$(cat "alias/$1")
+_RECIPE=$2
+
+bundle exec itamae ssh --user isucon --host $_SERVER cookbooks/$_RECIPE/default.rb
