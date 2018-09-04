@@ -2,5 +2,5 @@
 
 set -ex
 
-# scp -q $(cat config/access_server):/var/log/nginx/access.log tmp
+scp -q $(cat alias/access_server):/var/log/nginx/access.log tmp
 bundle exec ruby bin/summarize_access_log.rb

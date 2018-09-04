@@ -2,4 +2,4 @@
 
 set -ex
 
-ssh $(cat config/mysql_server) sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log
+ssh $(cat alias/mysql_server) sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log

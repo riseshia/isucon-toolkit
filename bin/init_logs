@@ -2,5 +2,5 @@
 
 set -ex
 
-ssh $(cat config/access_server) sudo truncate /var/log/nginx/access.log --size 0
-ssh $(cat config/mysql_server) sudo truncate /var/log/mysql/mysql-slow.log --size 0
+ssh $(cat alias/access_server) sudo truncate /var/log/nginx/access.log --size 0
+ssh $(cat alias/mysql_server) sudo truncate /var/log/mysql/mysql-slow.log --size 0
