@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -ex
+
+_SERVER=$(cat "alias/$1")
+_BRANCH=${1:-master}
+
+ssh "isucon@$_SERVER" /home/isucon/deploy_remote $_BRANCH
