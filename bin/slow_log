@@ -2,4 +2,4 @@
 
 set -ex
 
-ssh "isucon@$(cat alias/mysql_server)" sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log
+ssh "isucon@$(cat alias/app1)" sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log

@@ -1,6 +1,7 @@
 ## Bootstrap
 
 `cookbook/deploy-script/default.rb` に `<repository_url>`, `<deploy_to>` 設定
+`alias` を設定しまくる
 
 ## Itamae
 

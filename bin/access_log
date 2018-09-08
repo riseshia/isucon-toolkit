@@ -2,5 +2,5 @@
 
 set -ex
 
-scp -q "isucon@$(cat alias/access_server)":/var/log/nginx/access.log tmp
+scp -q "isucon@$(cat alias/app1)":/var/log/nginx/access.log tmp
 bundle exec ruby bin/summarize_access_log.rb
