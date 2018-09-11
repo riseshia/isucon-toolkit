@@ -7,6 +7,7 @@
 
 ```bash
 bin/itamae <aliased server> <cookbook name>
+bin/itamae-dryrun <aliased server> <cookbook name>
 ```
 
 ## Initialize log
