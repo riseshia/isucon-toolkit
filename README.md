@@ -1,7 +1,13 @@
 ## Bootstrap
 
-`cookbook/deploy-script/default.rb` に `<repository_url>`, `<deploy_to>` 設定
-`alias` を設定しまくる
+Specify required information to config.yml.
+
+## Sync sources
+
+```bash
+bin/pull-source
+bin/push-source
+```
 
 ## Itamae
 

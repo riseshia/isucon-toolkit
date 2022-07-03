@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require "yaml"
+require "fileutils"
+
+config = YAML.load_file("config.yml", symbolize_names: true)
+
+server_host = config.fetch(:servers).first
+user = config.fetch(:ssh).fetch(:user)
+identity_file = config.fetch(:ssh).fetch(:identity_file)
+sync_paths_map = config.fetch(:sync_paths)
+
+# execute rsync command
+sync_paths_map.each do |sync_from, sync_to|
+  puts "sync #{sync_from} to #{sync_to}"
+  sync_to_dir = sync_to.split("/")[..-2].join("/")
+
+  FileUtils.mkdir_p(sync_to_dir)
+  # exclude .bundle which is for server, not local
+  system("rsync -avz -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_to_dir}")
+end

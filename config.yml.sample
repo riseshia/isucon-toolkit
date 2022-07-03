@@ -1,0 +1,8 @@
+sync_paths:
+  /home/isucon/webapp/ruby: xxx
+  /home/isucon/webapp/sql: xxx
+ssh:
+  user: ubuntu
+  identity_file: xxxxx
+servers:
+  - xxxx
