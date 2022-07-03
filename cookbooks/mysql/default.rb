@@ -1,12 +1,14 @@
-service 'mysql'
+# frozen_string_literal: true
 
-%w(
+service "mysql"
+
+%w[
   /etc/mysql/my.cnf
-).each do |file|
+].each do |file|
   remote_file file do
-    owner 'root'
-    group 'root'
-    mode '644'
-    notifies :restart, 'service[mysql]'
+    owner "root"
+    group "root"
+    mode "644"
+    notifies :restart, "service[mysql]"
   end
 end
