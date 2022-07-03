@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require "yaml"
+require "fileutils"
+
+config = YAML.load_file("config.yml", symbolize_names: true)
+
+servers = config.fetch(:servers)
+user = config.fetch(:ssh).fetch(:user)
+identity_file = config.fetch(:ssh).fetch(:identity_file)
+
+remote_commands = config.fetch(:remote_commands)
+path = remote_commands.fetch(:path)
+
+servers.each do |server_host|
+  puts "-- Run setup script on #{server_host}"
+  setup = remote_commands.fetch(:setup).join(" && ")
+  restart = remote_commands.fetch(:restart).join(" && ")
+
+  puts "-- Setup env on #{server_host}"
+  system("ssh #{user}@#{server_host} 'export PATH=#{path} && #{setup}'")
+  puts "-- Restart server on #{server_host}"
+  system("ssh #{user}@#{server_host} 'export PATH=#{path} && #{restart}'")
+end

@@ -12,7 +12,7 @@ sync_paths_map = config.fetch(:sync_paths)
 
 # execute rsync command
 sync_paths_map.each do |sync_from, sync_to|
-  puts "sync #{sync_from} to #{sync_to}"
+  puts "-- Sync #{sync_from} to #{sync_to}"
   sync_to_dir = sync_to.split("/")[..-2].join("/")
 
   FileUtils.mkdir_p(sync_to_dir)

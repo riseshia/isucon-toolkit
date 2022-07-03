@@ -1,6 +1,11 @@
 sync_paths:
   /home/isucon/webapp/ruby: xxx
-  /home/isucon/webapp/sql: xxx
+remote_commands:
+  path: /home/isucon/local/ruby/bin:$PATH
+  setup:
+  - cd webapp/ruby && (bundle check || bundle install)
+  restart:
+  - xxxxx
 ssh:
   user: ubuntu
   identity_file: xxxxx
