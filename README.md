@@ -22,3 +22,9 @@ bin/init_logs
 bin/access_log # nginx log
 bin/slow_log   # mysql slow log
 ```
+
+## Checklist
+
+- [ ] pull related source
+- [ ] `$PATH` set correctly on non-interactive shell
+- [ ] switch target language to ruby from default
