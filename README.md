@@ -13,7 +13,8 @@ bin/deploy
 ## Initialize log
 
 ```bash
-bin/init_logs
+bin/pull-logs
+bin/truncate-logs
 ```
 
 ## Analyze
@@ -28,3 +29,4 @@ bin/slow_log   # mysql slow log
 - [ ] pull related source
 - [ ] `$PATH` set correctly on non-interactive shell
 - [ ] switch target language to ruby from default
+- [ ] Update reverse proxy log format

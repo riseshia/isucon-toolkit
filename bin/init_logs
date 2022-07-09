@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -ex
-
-ssh "isucon@$(cat alias/app1)" sudo truncate /var/log/nginx/access.log --size 0
-ssh "isucon@$(cat alias/app1)" sudo truncate /var/log/mysql/mysql-slow.log --size 0

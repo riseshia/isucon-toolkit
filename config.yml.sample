@@ -5,6 +5,13 @@ sync_paths:
   - remote: /etc/nginx/nginx.conf
     local: webapp/nginx.conf
     root: true
+log_paths:
+  isucon1:
+  - remote: /var/log/nginx/access.log
+    local: log/isucon1/access.log
+  - remote: /var/log/mysql/mysql-slow.log
+    local: log/isucon1/mysql-slow.log
+    root: true
 remote_commands:
   setup:
   - cd webapp/ruby

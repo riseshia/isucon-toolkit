@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require "yaml"
+require "fileutils"
+
+config = YAML.load_file("config.yml", symbolize_names: true)
+
+alias_to_ip = config.fetch(:servers)
+user = config.fetch(:ssh).fetch(:user)
+identity_file = config.fetch(:ssh).fetch(:identity_file)
+log_paths = config.fetch(:log_paths)
+
+# execute rsync command
+log_paths.each do |server_host, sync_config|
+  puts "+ Run script on #{server_host}"
+
+  sync_config.each do |target|
+    sync_from = target[:remote]
+    sync_to = target[:local]
+    require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
+
+    sync_to_dir = sync_to.split("/")[..-2].join("/")
+    server_ip = alias_to_ip.fetch(server_host.to_sym)
+    FileUtils.mkdir_p(sync_to_dir)
+
+    puts "+   Sync #{sync_from} to #{sync_to}"
+    # exclude .bundle which is for server, not local
+    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_to_dir}")
+  end
+end

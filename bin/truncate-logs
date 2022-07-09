@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require "yaml"
+require "fileutils"
+
+config = YAML.load_file("config.yml", symbolize_names: true)
+
+alias_to_ip = config.fetch(:servers)
+user = config.fetch(:ssh).fetch(:user)
+log_paths = config.fetch(:log_paths)
+
+log_paths.each do |server_host, log_config|
+  puts "+ Run script on #{server_host}"
+
+  server_ip = alias_to_ip.fetch(server_host.to_sym)
+
+  log_config.each do |target|
+    truncate_target = target[:remote]
+    require_root = target[:root] ? "sudo" : ""
+    command = "#{require_root} truncate --size 0 #{truncate_target}"
+
+    puts "+   Truncate #{truncate_target}"
+    system("ssh #{user}@#{server_ip} '#{command}'")
+  end
+end
