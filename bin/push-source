@@ -12,10 +12,14 @@ sync_paths_map = config.fetch(:sync_paths)
 
 # execute rsync command
 servers.each do |server_host|
-  sync_paths_map.each do |sync_to, sync_from|
+  sync_paths_map.each do |target|
+    sync_from = target[:local]
+    sync_to = target[:remote]
+    require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
+
     puts "-- Sync #{sync_from} to #{sync_to}"
     sync_to_dir = sync_to.to_s.split("/")[..-2].join("/")
 
-    system("rsync -avz -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_host}:#{sync_to_dir}")
+    system("rsync -avz #{require_root} -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_host}:#{sync_to_dir}")
   end
 end

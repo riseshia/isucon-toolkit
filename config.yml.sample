@@ -1,5 +1,7 @@
 sync_paths:
-  /home/isucon/webapp/ruby: xxx
+  - remote: /home/isucon/webapp/ruby
+    local: remote/ruby
+    root: false
 remote_commands:
   path: /home/isucon/local/ruby/bin:$PATH
   setup:
