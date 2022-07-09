@@ -1,15 +1,18 @@
 sync_paths:
+  isucon1:
   - remote: /home/isucon/webapp/ruby
     local: remote/ruby
-    root: false
+  - remote: /etc/nginx/nginx.conf
+    local: webapp/nginx.conf
+    root: true
 remote_commands:
-  path: /home/isucon/local/ruby/bin:$PATH
   setup:
-  - cd webapp/ruby && (bundle check || bundle install)
+  - cd webapp/ruby
+  - (bundle check || bundle install)
   restart:
   - xxxxx
 ssh:
-  user: ubuntu
+  user: isucon
   identity_file: xxxxx
 servers:
-  - xxxx
+  isucon1: xxxx

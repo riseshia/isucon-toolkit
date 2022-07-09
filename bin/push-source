@@ -5,21 +5,24 @@ require "fileutils"
 
 config = YAML.load_file("config.yml", symbolize_names: true)
 
-servers = config.fetch(:servers)
+alias_to_ip = config.fetch(:servers)
 user = config.fetch(:ssh).fetch(:user)
 identity_file = config.fetch(:ssh).fetch(:identity_file)
-sync_paths_map = config.fetch(:sync_paths)
+sync_paths = config.fetch(:sync_paths)
 
 # execute rsync command
-servers.each do |server_host|
-  sync_paths_map.each do |target|
+sync_paths.each do |server_host, sync_config|
+  puts "+ Run script on #{server_host}"
+
+  sync_config.each do |target|
     sync_from = target[:local]
     sync_to = target[:remote]
     require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
 
-    puts "-- Sync #{sync_from} to #{sync_to}"
     sync_to_dir = sync_to.to_s.split("/")[..-2].join("/")
+    server_ip = alias_to_ip.fetch(server_host.to_sym)
 
-    system("rsync -avz #{require_root} -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_host}:#{sync_to_dir}")
+    puts "+   Sync #{sync_from} to #{sync_to}"
+    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_ip}:#{sync_to_dir}")
   end
 end
