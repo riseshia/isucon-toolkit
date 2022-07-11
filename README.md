@@ -19,10 +19,7 @@ bin/truncate-logs
 
 ## Analyze
 
-```bash
-bin/access_log # nginx log
-bin/slow_log   # mysql slow log
-```
+use alp.
 
 ## Checklist
 

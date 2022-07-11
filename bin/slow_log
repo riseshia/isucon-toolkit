@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -ex
-
-ssh "isucon@$(cat alias/app1)" sudo mysqldumpslow -s t /var/log/mysql/mysqld-slow.log
