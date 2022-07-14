@@ -19,12 +19,18 @@ sync_paths.each do |server_host, sync_config|
     sync_to = target[:local]
     require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
 
-    sync_to_dir = sync_to.split("/")[..-2].join("/")
+    sync_path =
+      if sync_from.include?(".")
+        sync_to
+      else
+        sync_to.split("/")[..-2].join("/").tap do |dir|
+          FileUtils.mkdir_p(dir)
+        end
+      end
     server_ip = alias_to_ip.fetch(server_host.to_sym)
-    FileUtils.mkdir_p(sync_to_dir)
 
     puts "+   Sync #{sync_from} to #{sync_to}"
     # exclude .bundle which is for server, not local
-    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_to_dir}")
+    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_path}")
   end
 end

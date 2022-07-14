@@ -19,10 +19,15 @@ sync_paths.each do |server_host, sync_config|
     sync_to = target[:remote]
     require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
 
-    sync_to_dir = sync_to.to_s.split("/")[..-2].join("/")
+    sync_path =
+      if File.file?(sync_from)
+        sync_to
+      else
+        sync_to.to_s.split("/")[..-2].join("/")
+      end
     server_ip = alias_to_ip.fetch(server_host.to_sym)
 
     puts "+   Sync #{sync_from} to #{sync_to}"
-    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_ip}:#{sync_to_dir}")
+    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' #{sync_from} #{user}@#{server_ip}:#{sync_path}")
   end
 end
