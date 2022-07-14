@@ -3,7 +3,7 @@ sync_paths:
   - remote: /home/isucon/webapp/ruby
     local: remote/ruby
   - remote: /etc/nginx/nginx.conf
-    local: webapp/nginx.conf
+    local: remote/nginx.conf
     root: true
 log_paths:
   isucon1:
