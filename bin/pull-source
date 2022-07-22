@@ -3,34 +3,41 @@
 require "yaml"
 require "fileutils"
 
+unless ARGV.size == 1
+  puts "Usage: bin/pull-source <server alias>"
+  exit 1
+end
+
+server_host = ARGV.shift
+
 config = YAML.load_file("config.yml", symbolize_names: true)
 
 alias_to_ip = config.fetch(:servers)
 user = config.fetch(:ssh).fetch(:user)
 identity_file = config.fetch(:ssh).fetch(:identity_file)
-sync_paths = config.fetch(:sync_paths)
+
+sync_config = config.fetch(:sync_paths).fetch(server_host.to_sym)
+
 
 # execute rsync command
-sync_paths.each do |server_host, sync_config|
-  puts "+ Run script on #{server_host}"
+puts "+ Run script on #{server_host}"
 
-  sync_config.each do |target|
-    sync_from = target[:remote]
-    sync_to = target[:local]
-    require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
+sync_config.each do |target|
+  sync_from = target[:remote]
+  sync_to = target[:local]
+  require_root = target[:root] ? "--rsync-path='sudo rsync'" : ""
 
-    sync_path =
-      if sync_from.include?(".")
-        sync_to
-      else
-        sync_to.split("/")[..-2].join("/").tap do |dir|
-          FileUtils.mkdir_p(dir)
-        end
+  sync_path =
+    if sync_from.include?(".")
+      sync_to
+    else
+      sync_to.split("/")[..-2].join("/").tap do |dir|
+        FileUtils.mkdir_p(dir)
       end
-    server_ip = alias_to_ip.fetch(server_host.to_sym)
+    end
+  server_ip = alias_to_ip.fetch(server_host.to_sym)
 
-    puts "+   Sync #{sync_from} to #{sync_to}"
-    # exclude .bundle which is for server, not local
-    system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_path}")
-  end
+  puts "+   Sync #{sync_from} to #{sync_to}"
+  # exclude .bundle which is for server, not local
+  system("rsync -avzq #{require_root} -e 'ssh -i #{identity_file}' --exclude='.bundle/' #{user}@#{server_host}:#{sync_from} #{sync_path}")
 end

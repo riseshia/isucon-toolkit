@@ -10,7 +10,6 @@ user = config.fetch(:ssh).fetch(:user)
 remote_commands = config.fetch(:remote_commands)
 
 servers.each do |server_host, server_ip|
-  puts "+ Run script on #{server_host}"
   setup = remote_commands.fetch(:setup).join(" && ")
   restart = remote_commands.fetch(:restart).join(" && ")
 
