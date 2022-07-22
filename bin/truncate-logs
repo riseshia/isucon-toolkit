@@ -17,7 +17,12 @@ log_paths.each do |server_host, log_config|
   log_config.each do |target|
     truncate_target = target[:remote]
     require_root = target[:root] ? "sudo" : ""
-    command = "#{require_root} truncate --size 0 #{truncate_target}"
+    command =
+      if truncate_target.include?(".")
+        "#{require_root} truncate --size 0 #{truncate_target}"
+      else
+        "#{require_root} rm -rf #{truncate_target}"
+      end
 
     puts "+   Truncate #{truncate_target}"
     system("ssh #{user}@#{server_ip} '#{command}'")
