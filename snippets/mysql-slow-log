@@ -1,0 +1,6 @@
+[mysqld]
+slow_query_log=ON
+long_query_time=1
+log_queries_not_using_indexes=ON
+log_output=FILE
+slow_query_log_file=slow.log

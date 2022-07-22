@@ -1,0 +1,3 @@
+use StackProf::Middleware, enabled: true, mode: :cpu, raw: true, interval: 1000, save_every: 1_000, path: 'stackprof/'
+
+stackprof --d3-flamegraph log/stackprof-cpu-60682-1658493659.dump > flamegraph.html
