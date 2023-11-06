@@ -13,8 +13,10 @@ servers.each do |server_host, server_ip|
   setup = remote_commands.fetch(:setup).join(" && ")
   restart = remote_commands.fetch(:restart).join(" && ")
 
-  puts "+   Setup env"
+  puts "+   Setup env on #{server_host}"
+  puts "+     #{setup}"
   system("ssh #{user}@#{server_ip} '#{setup}'")
-  puts "+   Restart server"
+  puts "+   Restart server on #{server_host}"
+  puts "+     #{restart}"
   system("ssh #{user}@#{server_ip} '#{restart}'")
 end
