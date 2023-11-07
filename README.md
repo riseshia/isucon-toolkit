@@ -30,5 +30,5 @@ cat log/isucon1/access.log | alp json -m '/api/condition/[a-f0-9-]+,/api/isu/[a-
 ### mysql slow log
 
 ```
-mysqldumpslow slow.log > tmp/analyzed.log
+mysqldumpslow log/isucon1/mysql-slow.log > tmp/analyzed.log
 ```
