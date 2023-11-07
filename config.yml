@@ -1,43 +1,43 @@
 sync_paths:
   isucon1:
-  - remote: /etc/systemd/system/xxx.service
-    local: remote/xxx.service
-    root: true
-  - remote: /etc/nginx/nginx.conf
-    local: remote/nginx.conf
-    root: true
-  - remote: /etc/nginx/sites-available/xxx.conf
-    local: remote/nginx-xxx.conf
-    root: true
-  - remote: /etc/mysql/mysql.cnf
-    local: remote/mysql.cnf
-    root: true
-  - remote: /home/isucon/webapp/ruby
-    local: remote/ruby
-  - remote: /home/isucon/webapp/sql
-    local: remote/sql
+  # - remote: /etc/systemd/system/xxx.service
+  #   local: remote/xxx.service
+  #   root: true
+  # - remote: /etc/nginx/nginx.conf
+  #   local: remote/nginx.conf
+  #   root: true
+  # - remote: /etc/nginx/sites-available/xxx.conf
+  #   local: remote/nginx-xxx.conf
+  #   root: true
+  # - remote: /etc/mysql/mysql.cnf
+  #   local: remote/mysql.cnf
+  #   root: true
+  # - remote: /home/isucon/webapp/ruby
+  #   local: remote/ruby
+  # - remote: /home/isucon/webapp/sql
+  #   local: remote/sql
   isucon2:
-  - remote: /home/isucon/webapp/ruby
-    local: remote/ruby
+  # - remote: /home/isucon/webapp/ruby
+  #   local: remote/ruby
   isucon3:
-  - remote: /home/isucon/webapp/ruby
-    local: remote/ruby
+  # - remote: /home/isucon/webapp/ruby
+  #   local: remote/ruby
 log_paths:
   isucon1:
-  - remote: /var/log/nginx/access.log
-    local: log/isucon1/access.log
-    root: true
-  - remote: /var/log/mysql/slow.log
-    local: log/isucon1/mysql-slow.log
-    root: true
+  # - remote: /var/log/nginx/access.log
+  #   local: log/isucon1/access.log
+  #   root: true
+  # - remote: /var/log/mysql/slow.log
+  #   local: log/isucon1/mysql-slow.log
+  #   root: true
 remote_commands:
   setup:
   - cd webapp/ruby
   restart:
-  - sudo systemctl daemon-reload
-  - sudo systemctl restart nginx.service
-  - sudo systemctl restart mysql.service
-  - sudo systemctl restart xxx.service
+  # - sudo systemctl daemon-reload
+  # - sudo systemctl restart nginx.service
+  # - sudo systemctl restart mysql.service
+  # - sudo systemctl restart xxx.service
 ssh:
   user: isucon
   identity_file: ~/.ssh/xxxx
