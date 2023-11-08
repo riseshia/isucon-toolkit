@@ -24,7 +24,7 @@ bin/truncate-logs
 use alp.
 
 ```
-cat log/isucon1/access.log | alp json -m '/api/condition/[a-f0-9-]+,/api/isu/[a-f0-9-]+/icon'
+bin/alp
 ```
 
 ### mysql slow log
