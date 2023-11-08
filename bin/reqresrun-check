@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require "json"
+
+access_log_path = ARGV[0] || 'log/isucon1/access.log'
+
+access_logs = File.read(access_log_path)
+
+reqtime_sum = 0
+restime_sum = 0
+runtime_sum = 0
+count = 0
+wait_count = 0
+
+ignore_str = ["-", ""]
+access_logs.each_line do |row|
+  req = JSON.parse(row)
+  next if ignore_str.include?(req["response_time"])
+  next if ignore_str.include?(req["runtime"])
+
+  reqtime = req["request_time"].to_f
+  restime = req["response_time"].to_f
+  runtime = req["runtime"].to_f
+
+  count += 1
+  reqtime_sum += reqtime
+  restime_sum += reqtime
+  runtime_sum += runtime
+  diff = reqtime - runtime
+
+  if reqtime - runtime > 0.1
+    wait_count += 1
+  end
+end
+
+puts "count: #{count}"
+puts "avg reqtime: #{reqtime_sum / count}"
+puts "avg restime: #{restime_sum / count}"
+puts "avg runtime: #{runtime_sum / count}"
+puts "wait count: #{wait_count}"
