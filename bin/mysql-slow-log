@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -ex
+
+mysqldumpslow log/isucon1/mysql-slow.log > tmp/analyzed.log

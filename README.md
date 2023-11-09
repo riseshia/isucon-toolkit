@@ -30,5 +30,5 @@ bin/alp
 ### mysql slow log
 
 ```
-mysqldumpslow log/isucon1/mysql-slow.log > tmp/analyzed.log
+bin/mysql-slow-log
 ```
