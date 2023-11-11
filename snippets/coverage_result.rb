@@ -1,3 +1,6 @@
+require 'coverage'
+Coverage.start(lines: true)
+
 class CoverageResult
   PADDING = 4
 
@@ -33,14 +36,40 @@ class CoverageResult
 
     coverage_on_line = result[:lines]
 
-    rows = []
+    meta_infos = []
+    codes = []
     File.read(path).each_line.with_index do |line, index|
       prefix = coverage_on_line[index].to_s.rjust(PADDING)
       lineno = (index + 1).to_s.rjust(PADDING)
 
-      rows << "#{prefix} #{lineno}: #{line}"
+      meta_infos << "#{prefix} #{lineno}:"
+      codes << line
     end
 
-    "<" + "pre>" + rows.join + "<" + "/pre>"
+    <<~HTML
+      <html>
+        <head>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+          <style>
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr>
+              <td>
+              <pre>#{meta_infos.join("\n")}</pre>
+              </td>
+              <td>
+                <pre><code class="language-ruby">#{codes.join}</code></pre>
+              </td>
+            </tr>
+          </table>
+
+          <script>hljs.highlightAll();</script>
+        </body>
+      </html>
+    HTML
   end
 end
