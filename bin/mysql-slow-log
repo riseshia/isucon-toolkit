@@ -2,4 +2,4 @@
 
 set -ex
 
-mysqldumpslow log/isucon1/mysql-slow.log > tmp/analyzed.log
+pt-query-digest log/isucon1/mysql-slow.log | tee tmp/analyzed.log
