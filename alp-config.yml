@@ -17,9 +17,9 @@ output: "count,1xx,2xx,3xx,4xx,5xx,method,uri,min,max,sum,avg,p90,p95,p99"
 # nosave_pos:                 # boolean
 # percentiles:                # array
 # json:
+#   response_time_key: runtime
 #   uri_key:           # string
 #   method_key:        # string
 #   time_key:          # string
-#   response_time_key: # string
 #   body_bytes_key:    # string
 #   status_key:        # string
