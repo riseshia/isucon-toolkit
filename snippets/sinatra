@@ -1,4 +1,12 @@
-require_relative 'coverage_result'
+require 'akainaa'
 
-use CoverageResult
+Akainaa.start(
+  project_dir: File.expand_path(__dir__),
+  ignore_glob_patterns: %w[
+#     config/application.rb
+#     config/initializers/*_initializer.rb
+  ],
+)
+
+use Akainaa::Middleware
 use Rack::Runtime
